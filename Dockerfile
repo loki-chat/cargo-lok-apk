@@ -42,15 +42,15 @@ RUN cd /usr/local && \
 ENV NDK_HOME /usr/local/android-ndk-r25
 
 # Copy contents to container. Should only use this on a clean directory
-COPY . /root/cargo-apk
+COPY . /root/cargo-loki-apk
 
 RUN apt-get install -qy libssl-dev pkg-config
 
 # Install binary
-RUN cargo install --path /root/cargo-apk
+RUN cargo install --path /root/cargo-loki-apk
 
 # Remove source and build files
-RUN rm -rf /root/cargo-apk
+RUN rm -rf /root/cargo-loki-apk
 
 # Add build-tools to PATH, for apksigner
 ENV PATH="/opt/android-sdk-linux/build-tools/31.0.0/:${PATH}"

@@ -268,8 +268,7 @@ fn build_apks(
         }
         // otherwise "Type `java.lang.System` was not found" error
         d8_cmd.arg("--no-desugaring");
-        d8_cmd.arg("--min-api")
-            .arg("26");
+        d8_cmd.arg("--min-api").arg("26");
 
         d8_cmd.cwd(&target_directory).exec()?;
 

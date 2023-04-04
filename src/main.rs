@@ -2,8 +2,8 @@
 
 use anyhow::format_err;
 use cargo::core::Workspace;
-use cargo_util::ProcessBuilder;
 use cargo::util::Config as CargoConfig;
+use cargo_util::ProcessBuilder;
 use clap::{App, AppSettings, Arg, ArgMatches, SubCommand};
 
 use cargo::util::command_prelude::opt;
@@ -22,7 +22,7 @@ fn main() {
     };
 
     let args = match args.subcommand() {
-        Some(("quad-apk", subcommand_matches)) => subcommand_matches,
+        Some(("loki-apk", subcommand_matches)) => subcommand_matches,
         _ => &args,
     };
 
@@ -74,7 +74,7 @@ fn main() {
 }
 
 fn cli() -> App<'static> {
-    App::new("cargo-apk")
+    App::new("cargo-loki-apk")
         .settings(&[
             AppSettings::UnifiedHelpMessage,
             AppSettings::DeriveDisplayOrder,
@@ -130,7 +130,7 @@ fn cli() -> App<'static> {
 }
 
 fn cli_apk() -> App<'static> {
-    SubCommand::with_name("quad-apk")
+    SubCommand::with_name("loki-apk")
         .settings(&[
             AppSettings::UnifiedHelpMessage,
             AppSettings::DeriveDisplayOrder,

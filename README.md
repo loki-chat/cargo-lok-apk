@@ -1,6 +1,6 @@
 A fork of an old `android-rs-glue` crate, compatible with building miniquad-based projects.
 
-Forked again to work with [`lokinit`](https://github.com/loki-chat/lokinit)
+Forked again to work with [`lokinit`](https://github.com/loki-chat/lokinit).
 
 # Supported `[package.metadata.android]` entries
 

@@ -37,7 +37,7 @@ pub fn build_shared_libraries(
     config: &AndroidConfig,
     options: &ArgMatches,
     root_build_dir: &PathBuf,
-    miniquad_root_path: &PathBuf,
+    lokinit_root_path: &PathBuf,
 ) -> CargoResult<SharedLibraries> {
     let shared_libraries: Arc<Mutex<MultiMap<Target, SharedLibrary>>> =
         Arc::new(Mutex::new(MultiMap::new()));
@@ -79,7 +79,7 @@ pub fn build_shared_libraries(
             build_target_dir: build_target_dir.clone(),
             build_target,
             shared_libraries: shared_libraries.clone(),
-            miniquad_root_path: miniquad_root_path.clone(),
+            lokinit_root_path: lokinit_root_path.clone(),
             nostrip,
         });
 
@@ -100,7 +100,7 @@ struct SharedLibraryExecutor {
     build_target_dir: PathBuf,
     build_target: AndroidBuildTarget,
 
-    miniquad_root_path: PathBuf,
+    lokinit_root_path: PathBuf,
     nostrip: bool,
 
     // Shared libraries built by the executor are added to this multimap
@@ -156,7 +156,7 @@ impl Executor for SharedLibraryExecutor {
             let extra_code = format!(
                 "mod cargo_apk_glue_code {{ {} }}",
                 fs::read_to_string(
-                    self.miniquad_root_path
+                    self.lokinit_root_path
                         .join("src")
                         .join("native")
                         .join("android")

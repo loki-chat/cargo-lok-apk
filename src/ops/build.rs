@@ -39,14 +39,14 @@ pub fn build(
 ) -> CargoResult<BuildResult> {
     let root_source_path = workspace.root();
     let root_build_dir = util::get_root_build_directory(workspace, config);
-    let miniquad_root_path = util::find_package_root_path(workspace, config, "miniquad");
+    let lokinit_root_path = util::find_package_root_path(workspace, config, "lokinit");
     let java_files = util::collect_java_files(workspace, config);
     let shared_libraries = compile::build_shared_libraries(
         workspace,
         config,
         options,
         &root_build_dir,
-        &miniquad_root_path,
+        &lokinit_root_path,
     )?;
     let sign = !options.is_present("nosign");
 
@@ -57,7 +57,7 @@ pub fn build(
         shared_libraries,
         java_files,
         sign,
-        &miniquad_root_path,
+        &lokinit_root_path,
     )
 }
 
@@ -68,10 +68,10 @@ fn build_apks(
     shared_libraries: SharedLibraries,
     java_files: util::JavaFiles,
     sign: bool,
-    miniquad_root_path: &PathBuf,
+    lokinit_root_path: &PathBuf,
 ) -> CargoResult<BuildResult> {
-    let main_activity_path = miniquad_root_path.join("java").join("MainActivity.java");
-    let quad_native_path = miniquad_root_path.join("java").join("QuadNative.java");
+    let main_activity_path = lokinit_root_path.join("java").join("MainActivity.java");
+    let quad_native_path = lokinit_root_path.join("java").join("QuadNative.java");
 
     // Create directory to hold final APKs which are signed using the debug key
     let final_apk_dir = root_build_dir.join("apk");
@@ -144,7 +144,7 @@ fn build_apks(
         let target_activity_path = java_dir.join("MainActivity.java");
 
         let java_src = fs::read_to_string(&main_activity_path)
-            .expect("Something went wrong reading miniquad's MainActivity.java file");
+            .expect("Something went wrong reading lokinit's MainActivity.java file");
 
         let java_src = preprocessor::preprocess_main_activity(
             &java_src,
@@ -161,7 +161,7 @@ fn build_apks(
 
         for (global_path, local_path) in &java_files.java_files {
             let java_src = fs::read_to_string(global_path)
-                .expect("Something went wrong reading miniquad's MainActivity.java file");
+                .expect("Something went wrong reading lokinit's MainActivity.java file");
 
             let java_src = java_src.replace("TARGET_PACKAGE_NAME", &package_name);
             let java_src = java_src.replace("LIBRARY_NAME", &library_name);

@@ -203,7 +203,7 @@ pub fn find_package_root_path(
     let specs = cargo::ops::Packages::Default
         .to_package_id_specs(&workspace)
         .unwrap();
-    // assuming all the build targets use the same miniquad version
+    // assuming all the build targets use the same lokinit version
     // which should be always true
     let first_build_target = config
         .build_targets
@@ -227,17 +227,17 @@ pub fn find_package_root_path(
     )
     .unwrap();
 
-    let miniquad_pkg = ws_resolve
+    let lokinit_pkg = ws_resolve
         .pkg_set
         .packages()
-        .find(|package| package.name() == package_name).expect("cargo quad can't build a non-miniquad package, but no miniquad is found in the dependencies tree!");
+        .find(|package| package.name() == package_name).expect("cargo quad can't build a non-lokinit package, but no lokinit is found in the dependencies tree!");
 
-    miniquad_pkg.root().to_path_buf()
+    lokinit_pkg.root().to_path_buf()
 }
 
 #[derive(Clone, Debug)]
 pub struct JavaFiles {
-    /// Optional file with a template to be injected into miniquad's MainActivity
+    /// Optional file with a template to be injected into lokinit's MainActivity
     pub main_activity_injects: Vec<PathBuf>,
 
     /// Extra Java files to compile alongside the app's MainActivity
@@ -300,7 +300,7 @@ pub fn collect_java_files(workspace: &Workspace, config: &AndroidConfig) -> Java
     let specs = cargo::ops::Packages::Default
         .to_package_id_specs(&workspace)
         .unwrap();
-    // assuming all the build targets use the same miniquad version
+    // assuming all the build targets use the same lokinit version
     // which should be always true
     let first_build_target = config
         .build_targets

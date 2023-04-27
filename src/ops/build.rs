@@ -71,7 +71,7 @@ fn build_apks(
     lokinit_root_path: &PathBuf,
 ) -> CargoResult<BuildResult> {
     let main_activity_path = lokinit_root_path.join("java").join("MainActivity.java");
-    let quad_native_path = lokinit_root_path.join("java").join("QuadNative.java");
+    let loki_native_path = lokinit_root_path.join("java").join("LokiNative.java");
 
     // Create directory to hold final APKs which are signed using the debug key
     let final_apk_dir = root_build_dir.join("apk");
@@ -155,9 +155,9 @@ fn build_apks(
 
         fs::write(&target_activity_path, java_src)?;
 
-        let target_quad_native_path = target_directory.join("quad_native").join("QuadNative.java");
-        fs::create_dir_all(target_quad_native_path.parent().unwrap())?;
-        fs::copy(&quad_native_path, &target_quad_native_path)?;
+        let target_loki_native_path = target_directory.join("loki_native").join("LokiNative.java");
+        fs::create_dir_all(target_loki_native_path.parent().unwrap())?;
+        fs::copy(&loki_native_path, &target_loki_native_path)?;
 
         for (global_path, local_path) in &java_files.java_files {
             let java_src = fs::read_to_string(global_path)
@@ -246,7 +246,7 @@ fn build_apks(
             .arg(&classpath)
             .arg("-d")
             .arg("build/obj");
-        java_cmd.arg("quad_native/QuadNative.java");
+        java_cmd.arg("loki_native/LokiNative.java");
         for (_, java_file) in &java_files.java_files {
             let java_file = java_file.strip_prefix("java/")?;
             java_cmd.arg(&java_file);

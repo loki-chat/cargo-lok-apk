@@ -127,8 +127,7 @@ fn build_apks(
             .package_name
             .split(".")
             .last()
-            .unwrap()
-            .clone();
+            .unwrap();
 
         let mut r_java_path = gen_dir.clone();
         for file_part in package_name.split('.') {

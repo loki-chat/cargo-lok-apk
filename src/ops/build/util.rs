@@ -203,7 +203,7 @@ pub fn find_package_root_path(
     let specs = cargo::ops::Packages::Default
         .to_package_id_specs(&workspace)
         .unwrap();
-    // assuming all the build targets use the same miniquad version
+    // assuming all the build targets use the same lokinit version
     // which should be always true
     let first_build_target = config
         .build_targets
@@ -227,17 +227,17 @@ pub fn find_package_root_path(
     )
     .unwrap();
 
-    let miniquad_pkg = ws_resolve
+    let lokinit_pkg = ws_resolve
         .pkg_set
         .packages()
-        .find(|package| package.name() == package_name).expect("cargo quad can't build a non-miniquad package, but no miniquad is found in the dependencies tree!");
+        .find(|package| package.name() == package_name).expect("cargo loki can't build a non-lokinit package, but no lokinit is found in the dependencies tree!");
 
-    miniquad_pkg.root().to_path_buf()
+    lokinit_pkg.root().to_path_buf()
 }
 
 #[derive(Clone, Debug)]
 pub struct JavaFiles {
-    /// Optional file with a template to be injected into miniquad's MainActivity
+    /// Optional file with a template to be injected into lokinit's MainActivity
     pub main_activity_injects: Vec<PathBuf>,
 
     /// Extra Java files to compile alongside the app's MainActivity
@@ -258,7 +258,7 @@ pub struct JavaFiles {
 }
 
 #[derive(Debug, Clone, Deserialize)]
-struct QuadToml {
+struct LokiToml {
     main_activity_inject: Option<String>,
     java_files: Option<Vec<String>>,
     comptime_jar_files: Option<Vec<String>>,
@@ -270,19 +270,19 @@ struct QuadToml {
     package_root: PathBuf,
 }
 
-fn read_quad_toml(path: &Path) -> Option<QuadToml> {
-    let quad_toml_path = path.join("quad.toml");
-    if !quad_toml_path.exists() {
+fn read_loki_toml(path: &Path) -> Option<LokiToml> {
+    let loki_toml_path = path.join("loki.toml");
+    if !loki_toml_path.exists() {
         return None;
     }
 
     let content = {
-        let mut file = File::open(quad_toml_path).unwrap();
+        let mut file = File::open(loki_toml_path).unwrap();
         let mut content = String::new();
         file.read_to_string(&mut content).unwrap();
         content
     };
-    let mut config: QuadToml = toml::from_str(&content)
+    let mut config: LokiToml = toml::from_str(&content)
         .map_err(anyhow::Error::from)
         .unwrap_or_else(|err| panic!("{:?} toml file malformed, {:?}", path, err));
 
@@ -300,7 +300,7 @@ pub fn collect_java_files(workspace: &Workspace, config: &AndroidConfig) -> Java
     let specs = cargo::ops::Packages::Default
         .to_package_id_specs(&workspace)
         .unwrap();
-    // assuming all the build targets use the same miniquad version
+    // assuming all the build targets use the same lokinit version
     // which should be always true
     let first_build_target = config
         .build_targets
@@ -342,7 +342,7 @@ pub fn collect_java_files(workspace: &Workspace, config: &AndroidConfig) -> Java
     ws_resolve
         .pkg_set
         .packages()
-        .filter_map(|package| read_quad_toml(package.root()))
+        .filter_map(|package| read_loki_toml(package.root()))
         .for_each(|toml| {
             let root = toml.package_root.clone();
             let to_absolute = |x: &Option<Vec<String>>| {

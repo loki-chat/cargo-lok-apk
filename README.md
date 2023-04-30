@@ -1,6 +1,4 @@
-A fork of an old `android-rs-glue` crate, compatible with building miniquad-based projects.
-
-Forked again to work with [`lokinit`](https://github.com/loki-chat/lokinit)
+A fork of [`cargo-quad-apk`](https://github.com/not-fl3/cargo-quad-apk) for [`lokinit`](https://github.com/loki-chat/lokinit)-based projects.
 
 # Supported `[package.metadata.android]` entries
 

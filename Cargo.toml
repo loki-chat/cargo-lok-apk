@@ -1,9 +1,9 @@
 [package]
 name = "cargo-loki-apk"
 version = "0.1.4"
-authors = ["Pierre Krieger <pierre.krieger1708@gmail.com>", "Philip Alldredge <philip@philipalldredge.com>", "Fedor Logachev <not.fl3@gmail.com>"]
+authors = ["The Loki Authors", "Pierre Krieger <pierre.krieger1708@gmail.com>", "Philip Alldredge <philip@philipalldredge.com>", "Fedor Logachev <not.fl3@gmail.com>"]
 license = "MIT"
-description = "Cargo subcommand that allows you to build Android packages"
+description = "Cargo subcommand that allows you to build Android packages for projects using lokinit."
 repository = "https://github.com/loki-chat/cargo-loki-apk.git"
 edition = "2018"
 
